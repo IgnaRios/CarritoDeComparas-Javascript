@@ -1,37 +1,55 @@
-const tablaProd = document.querySelector('#tablaProd')
-const tbodyProd = document.querySelector('#tbodyProd')
-const tBodyCart = document.querySelector('#tBodyCart')
-const tableCO = document.querySelector('#tableCO')
+const productosContainer = document.querySelector('.productsContainer');
+const cart = document.querySelector('.cart');
+const tableCart = document.querySelector('.tableCart');
+const theadCart = document.querySelector('.theadCart');
+const tbodyCart = document.querySelector('.tbodyCart');
 
-function createElementDom  () {
-productos.forEach(function (item){
-    const row = document.createElement('tr')
-    const tdproduct = document.createElement('td')
-    const tdprice = document.createElement('td')
-    tbodyProd.appendChild(row)
-    row.appendChild(tdproduct)
-    row.appendChild(tdprice)
-    tdproduct.textContent = item.nombre
-    tdprice.textContent = `$ ${item.precio} `
-    const addButton = document.createElement('input')
-    row.appendChild(addButton)
-    addButton.type = 'button'
-    addButton.value = "Agregar al Carrito"
-    addButton.onclick = addToCart;
-});
-    function addToCart (e) {
-        const row = document.createElement('tr')
-        const tdSubTotalProducto = document.createElement('td')
-        const tdSubtotalPrice = document.createElement('td')
-        tBodyCart.appendChild(row)
-        row.appendChild(tdSubTotalProducto)
-        row.appendChild(tdSubtotalPrice)
-        tdSubTotalProducto.textContent = tdproduct;
-        tdSubtotalPrice.textContent = tdprice;
-        console.log(tdSubtotalPrice)
-        console.log(tdSubTotalProducto)
+
+function createElementDom () {
+    productos.forEach(function (product) {
+        const card = document.createElement('div');
+        card.className='card';   
+        const title = document.createElement('h2');
+        title.textContent = product.nombre.toLocaleUpperCase();
+        title.className = 'card-title'
+        card.appendChild(title)
+        const price = document.createElement('p');
+        price.textContent = `$ ${product.precio}`;
+        price.className = 'card-price';
+        card.appendChild(price);
+        const btnAdd = document.createElement('button');
+        btnAdd.type ='button';
+        card.appendChild(btnAdd);
+        btnAdd.textContent = 'Add';
+        btnAdd.className = 'addbtn';
+        productosContainer.appendChild(card);
+    })
+
+    const buttonAddToCart = document.querySelectorAll('.addbtn');
+    buttonAddToCart.forEach( (buttonCartAdd) => {
+        buttonCartAdd.addEventListener('click', addToCart)  
+    });
+
+    function addToCart(e) {
+        const button = e.target;
+        const product = button.closest('.card')
+
+        const productTitle = product.querySelector('.card-title').textContent;
+        const productPrice = product.querySelector('.card-price').textContent;
+        
+        addProductToCart(productTitle, productPrice)
+    };
+
+    function addProductToCart(productTitle, productPrice){
+
+
+        
     }
 }
+
+
+
+    
 
 
 const productos = [
