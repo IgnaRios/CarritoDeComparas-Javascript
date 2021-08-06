@@ -1,9 +1,7 @@
 const productosContainer = document.querySelector('.productsContainer');
 const cart = document.querySelector('.cart');
-const tableCart = document.querySelector('.tableCart');
-const theadCart = document.querySelector('.theadCart');
-const tbodyCart = document.querySelector('.tbodyCart');
-
+const productListCart = document.querySelector('.productListCart')
+const cartTitle = document.querySelector('.cartTitle');
 
 function createElementDom () {
     productos.forEach(function (product) {
@@ -42,14 +40,43 @@ function createElementDom () {
 
     function addProductToCart(productTitle, productPrice){
 
-
         
+        const row =  document.createElement('div')
+        const product = document.createElement('p');
+        const price = document.createElement('p');
+        const quantity = document.createElement('input');
+        const subtotal = document.createElement('p');
+        const buttonDelete = document.createElement('button');
+
+        quantity.type = 'number';
+
+        row.className = 'rowProduct';
+        product.className = 'cartList';
+        price.className = 'cartList';
+        quantity.className = 'cartList quantity';
+        subtotal.className = 'cartList';
+        buttonDelete.className = 'cartList delete';
+
+        productListCart.appendChild(row);
+        row.appendChild(product);
+        row.appendChild(price);
+        row.appendChild(quantity);
+        row.appendChild(subtotal);
+        row.appendChild(buttonDelete);    
+        
+        
+        product.textContent = productTitle;
+        price.textContent = productPrice;
+        quantity.value = 1;
+        quantity.min = 1;
+        quantity.max = 10;
+
     }
+
+
+
 }
-
-
-
-    
+  
 
 
 const productos = [
