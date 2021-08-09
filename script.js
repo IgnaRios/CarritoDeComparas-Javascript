@@ -39,7 +39,6 @@ function createElementDom () {
     };
 
     function addProductToCart(productTitle, productPrice){
-
         
         const row =  document.createElement('div')
         const product = document.createElement('p');
@@ -52,9 +51,9 @@ function createElementDom () {
 
         row.className = 'rowProduct';
         product.className = 'cartList';
-        price.className = 'cartList';
+        price.className = 'cartList price';
         quantity.className = 'cartList quantity';
-        subtotal.className = 'cartList';
+        subtotal.className = 'cartList subtotal';
         buttonDelete.className = 'cartList delete';
 
         productListCart.appendChild(row);
@@ -70,11 +69,60 @@ function createElementDom () {
         quantity.value = 1;
         quantity.min = 1;
         quantity.max = 10;
+        buttonDelete.textContent = 'X';
 
+        row.querySelector('.delete').addEventListener('click', deleteRowItem);
+        row.querySelector('.quantity').addEventListener('change', changeQuantity);
+        row.querySelector('.quantity').addEventListener('change', setSubtotal);
+        
+
+        totalCartUpdate();
     }
 
+    function totalCartUpdate(){
 
+        let total = 0;
+        const totalCart = document.querySelector('.totalCart')
+        const rowItemsCart = document.querySelectorAll('.rowProduct')
+        
+        rowItemsCart.forEach((rowItemCart) =>{
+            const rowPriceElement = rowItemCart.querySelector('.price'); 
+            const quantityElement = rowItemCart.querySelector('.quantity');
 
+            const quantityValue = Number(quantityElement.value);
+
+            const priceValue = Number(rowPriceElement.textContent.replace('$', ''))
+            total = total + quantityValue * priceValue;
+            
+            totalCart.innerHTML = total;
+        })
+    }
+
+    function deleteRowItem (e) {
+        const buttonDeleteclick = e.target;
+        buttonDeleteclick.closest('.rowProduct').remove();
+        totalCartUpdate()
+        
+    }
+
+    function changeQuantity (e) {
+        const changedQuantity = e.target;
+        totalCartUpdate();    
+    };
+
+    function setSubtotal (e) {
+        const subtotalContent = document.querySelector('.subtotal');
+        subtotal = 0;
+        const quantityElementValue = Number(e.target.value);
+        const priceElementValue = document.querySelector('.price');
+        const priceSelected = Number(priceElementValue.textContent.replace('$', ''));
+        subtotal = subtotal + quantityElementValue * priceSelected;
+
+        subtotalContent.innerHTML =`$ ${subtotal}`;
+        console.log(subtotal, typeof subtotal);
+    
+
+    };
 }
   
 

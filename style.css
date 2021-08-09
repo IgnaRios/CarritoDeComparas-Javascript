@@ -119,3 +119,17 @@ body{
     text-align: center;
     margin: 0 auto;
 }
+
+.delete{
+    background-color: rgb(216, 73, 48);
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px  black;
+    border: none;
+}
+
+.delete:hover {background-color: tomato}
+
+.delete:active {
+  background-color: tomato;
+  transform: translateY(2px);
+}
