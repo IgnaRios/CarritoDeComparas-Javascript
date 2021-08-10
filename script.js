@@ -90,13 +90,13 @@ function createElementDom () {
 
     function totalCartUpdate(){
 
-        
+        let total = 0;
         let subtotal = 0;
         const totalCart = document.querySelector('.totalCart');
         const rowItemsCart = document.querySelectorAll('.rowProduct');
         
         rowItemsCart.forEach((rowItemCart) =>{
-            let total = 0;
+            
             const rowPriceElement = rowItemCart.querySelector('.price'); 
             const quantityElement = rowItemCart.querySelector('.quantity');
             const subtotalElement = rowItemCart.querySelector('.subtotal');
@@ -125,14 +125,7 @@ function createElementDom () {
         totalCartUpdate();    
     };
     
-    const clearCart = document.querySelector('.vaciar'); //me falta conseguir vaciar el carrito
-    clearCart.addEventListener('click', () => {
-        rowItemsCart = document.querySelector('.rowProduct');
-  
 
-
-        totalCartUpdate();
-    });
 
 }   
   
