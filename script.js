@@ -2,6 +2,8 @@ const productosContainer = document.querySelector('.productsContainer');
 const cart = document.querySelector('.cart');
 const productListCart = document.querySelector('.productListCart')
 const cartTitle = document.querySelector('.cartTitle');
+const productsSelected = document.querySelector('.productsSelected');
+productListCart.appendChild(productsSelected);
 
 function createElementDom () {
     productos.forEach(function (product) {
@@ -39,6 +41,16 @@ function createElementDom () {
     };
 
     function addProductToCart(productTitle, productPrice){
+
+        const titlesElements = productsSelected.getElementsByClassName('title');
+        for(let i = 0; i < titlesElements.length ; i++ ){
+            if(titlesElements[i].innerText === productTitle){
+                const elementQuantity = titlesElements[i].parentElement.querySelector('.quantity');
+                elementQuantity.value++;
+                totalCartUpdate();
+                return;
+            };
+        }
         
         const row =  document.createElement('div')
         const product = document.createElement('p');
@@ -50,13 +62,13 @@ function createElementDom () {
         quantity.type = 'number';
 
         row.className = 'rowProduct';
-        product.className = 'cartList';
+        product.className = 'cartList title';
         price.className = 'cartList price';
         quantity.className = 'cartList quantity';
         subtotal.className = 'cartList subtotal';
         buttonDelete.className = 'cartList delete';
 
-        productListCart.appendChild(row);
+        productsSelected.appendChild(row);
         row.appendChild(product);
         row.appendChild(price);
         row.appendChild(quantity);
@@ -67,63 +79,62 @@ function createElementDom () {
         product.textContent = productTitle;
         price.textContent = productPrice;
         quantity.value = 1;
-        quantity.min = 1;
         quantity.max = 10;
         buttonDelete.textContent = 'X';
 
         row.querySelector('.delete').addEventListener('click', deleteRowItem);
         row.querySelector('.quantity').addEventListener('change', changeQuantity);
-        row.querySelector('.quantity').addEventListener('change', setSubtotal);
         
-
         totalCartUpdate();
     }
 
     function totalCartUpdate(){
 
-        let total = 0;
-        const totalCart = document.querySelector('.totalCart')
-        const rowItemsCart = document.querySelectorAll('.rowProduct')
+        
+        let subtotal = 0;
+        const totalCart = document.querySelector('.totalCart');
+        const rowItemsCart = document.querySelectorAll('.rowProduct');
         
         rowItemsCart.forEach((rowItemCart) =>{
+            let total = 0;
             const rowPriceElement = rowItemCart.querySelector('.price'); 
             const quantityElement = rowItemCart.querySelector('.quantity');
+            const subtotalElement = rowItemCart.querySelector('.subtotal');
 
             const quantityValue = Number(quantityElement.value);
+            const priceValue = Number(rowPriceElement.textContent.replace('$', ''));
 
-            const priceValue = Number(rowPriceElement.textContent.replace('$', ''))
+            subtotal = quantityValue * priceValue;
             total = total + quantityValue * priceValue;
             
-            totalCart.innerHTML = total;
-        })
+            subtotalElement.innerHTML = `$ ${subtotal}`;
+            totalCart.innerHTML = `$ ${total.toFixed(2)}` ;
+        });
     }
 
-    function deleteRowItem (e) {
+
+    function deleteRowItem (e) { // me falta conseguri que al borrar el ultimo item del carrito me deje el total en $0
         const buttonDeleteclick = e.target;
         buttonDeleteclick.closest('.rowProduct').remove();
-        totalCartUpdate()
-        
+        totalCartUpdate();
     }
 
     function changeQuantity (e) {
         const changedQuantity = e.target;
+        changedQuantity.value < 1 ? changedQuantity.value = 1 : null;
         totalCartUpdate();    
     };
-
-    function setSubtotal (e) {
-        const subtotalContent = document.querySelector('.subtotal');
-        subtotal = 0;
-        const quantityElementValue = Number(e.target.value);
-        const priceElementValue = document.querySelector('.price');
-        const priceSelected = Number(priceElementValue.textContent.replace('$', ''));
-        subtotal = subtotal + quantityElementValue * priceSelected;
-
-        subtotalContent.innerHTML =`$ ${subtotal}`;
-        console.log(subtotal, typeof subtotal);
     
+    const clearCart = document.querySelector('.vaciar'); //me falta conseguir vaciar el carrito
+    clearCart.addEventListener('click', () => {
+        rowItemsCart = document.querySelector('.rowProduct');
+  
 
-    };
-}
+
+        totalCartUpdate();
+    });
+
+}   
   
 
 
@@ -150,11 +161,11 @@ const productos = [
     },
     {
         nombre: "aceite",
-        precio: 350
+        precio: 350.55
     },
     {
         nombre: "sopa",
-        precio: 86
+        precio: 86.99
     },
     {
         nombre: "mermelada",
