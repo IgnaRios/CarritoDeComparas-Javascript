@@ -1,5 +1,6 @@
 body{
-    background-color: rgb(201, 240, 179);
+    background-color: rgb(250, 252, 160);
+    margin-top: 50px;
 }
 
 .productsContainer{
@@ -97,20 +98,16 @@ body{
     flex: none;
     width: 10%;
     margin: 1%;
-
 }
 
 .quantity{
     width: 60px;
-    height: 30px;
-
-    
+    height: 30px; 
 }
 .delete{
     width: 60px;
     height: 30px;
     margin-top: 15px;
-
 }
 
 .total{
@@ -118,20 +115,34 @@ body{
     justify-content: space-evenly;
     text-align: center;
     font-size: 2rem;
+    color: whitesmoke;
 }
 
 .delete{
     background-color: rgb(216, 73, 48);
+    color: whitesmoke;
     border-radius: 10px;
     box-shadow: 0px 0px 5px  black;
     border: none;
 }
 
 .delete:hover {
-    background-color: tomato}
+    background-color: tomato
+}
 
 .delete:active {
   transform: translateY(2px);
+}
+
+.totalAmount{
+    display: flex;
+    background-color: cornflowerblue;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px  black;
+    height: 80px;
+    width: 300px;
+    align-items: center;
+    justify-content: center;
 }
 
 .checkout{
@@ -143,12 +154,14 @@ body{
     height: 80px;
     width: 500px;
     font-size: 20px;
+    color: whitesmoke;
 
 }
-.checkout:hover {background-color: rgb(122, 236, 122)}
+.checkout:hover {
+    background-color: rgb(122, 236, 122)
+}
 
-.checkout:active {
-  
+.checkout:active {  
   transform: translateY(2px);
 }
 
@@ -162,8 +175,11 @@ body{
     height: 80px;
     width: 300px;
     font-size: 20px;
+    color: whitesmoke;
 }
-.vaciar:hover {background-color: tomato}
+.vaciar:hover {
+    background-color: tomato
+}
 
 .vaciar:active {
   transform: translateY(2px);
@@ -171,4 +187,5 @@ body{
 
 .importeTotal{
     padding: 0;
+    margin: 0;
 }

@@ -6,6 +6,9 @@ const productsSelected = document.querySelector('.productsSelected');
 productListCart.appendChild(productsSelected);
 
 function createElementDom () {
+    const buttonEmptyCart = document.querySelector('.vaciar');
+    buttonEmptyCart.addEventListener('click', emptyCart)
+
     productos.forEach(function (product) {
         const card = document.createElement('div');
         card.className='card';   
@@ -84,19 +87,19 @@ function createElementDom () {
 
         row.querySelector('.delete').addEventListener('click', deleteRowItem);
         row.querySelector('.quantity').addEventListener('change', changeQuantity);
-        
         totalCartUpdate();
     }
 
-    function totalCartUpdate(){
+    function totalCartUpdate(e){
 
         let total = 0;
         let subtotal = 0;
         const totalCart = document.querySelector('.totalCart');
         const rowItemsCart = document.querySelectorAll('.rowProduct');
         
+        
         rowItemsCart.forEach((rowItemCart) =>{
-            
+        
             const rowPriceElement = rowItemCart.querySelector('.price'); 
             const quantityElement = rowItemCart.querySelector('.quantity');
             const subtotalElement = rowItemCart.querySelector('.subtotal');
@@ -106,17 +109,17 @@ function createElementDom () {
 
             subtotal = quantityValue * priceValue;
             total = total + quantityValue * priceValue;
-            
+
             subtotalElement.innerHTML = `$ ${subtotal}`;
-            totalCart.innerHTML = `$ ${total.toFixed(2)}` ;
+            totalCart.innerHTML = `$ ${total.toFixed(2)}`;
+            
         });
     }
 
-
-    function deleteRowItem (e) { // me falta conseguri que al borrar el ultimo item del carrito me deje el total en $0
+    function deleteRowItem (e) { // me falta conseguir que al borrar el ultimo item del carrito me deje el total en $0
+        totalCartUpdate();
         const buttonDeleteclick = e.target;
         buttonDeleteclick.closest('.rowProduct').remove();
-        totalCartUpdate();
     }
 
     function changeQuantity (e) {
@@ -124,9 +127,20 @@ function createElementDom () {
         changedQuantity.value < 1 ? changedQuantity.value = 1 : null;
         totalCartUpdate();    
     };
-    
 
+    function emptyCart (e) {
+        const removeRows = document.getElementById('productsSelected');
 
+        while(removeRows.firstChild){
+            removeRows.removeChild(removeRows.lastChild);
+        }
+
+        //totalCartUpdate();  
+        
+        const totalCart = document.querySelector('.totalCart'); // tengo que agregar estas dos lineas de codigo porque si llamo a la funcion totalCartUpdate()
+        totalCart.innerHTML = '';                               // no me actualiza el valor total al vaciar el  carrito
+        
+    }
 }   
   
 
