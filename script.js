@@ -114,12 +114,14 @@ function createElementDom () {
             totalCart.innerHTML = `$ ${total.toFixed(2)}`;
             
         });
+    
     }
 
     function deleteRowItem (e) { // me falta conseguir que al borrar el ultimo item del carrito me deje el total en $0
-        totalCartUpdate();
         const buttonDeleteclick = e.target;
         buttonDeleteclick.closest('.rowProduct').remove();
+
+        totalCartUpdate();
     }
 
     function changeQuantity (e) {
