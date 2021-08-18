@@ -7,7 +7,9 @@ productListCart.appendChild(productsSelected);
 
 function createElementDom () {
     const buttonEmptyCart = document.querySelector('.vaciar');
-    buttonEmptyCart.addEventListener('click', emptyCart)
+    buttonEmptyCart.addEventListener('click', emptyCart);
+    const buttonCheckOut = document.querySelector('.checkout');
+    buttonCheckOut.addEventListener('click',checkOut);
 
     productos.forEach(function (product) {
         const card = document.createElement('div');
@@ -40,7 +42,7 @@ function createElementDom () {
         const productTitle = product.querySelector('.card-title').textContent;
         const productPrice = product.querySelector('.card-price').textContent;
         
-        addProductToCart(productTitle, productPrice)
+        addProductToCart(productTitle, productPrice);
     };
 
     function addProductToCart(productTitle, productPrice){
@@ -97,6 +99,7 @@ function createElementDom () {
         const totalCart = document.querySelector('.totalCart');
         const rowItemsCart = document.querySelectorAll('.rowProduct');
         
+        rowItemsCart.length < 1 ?  totalCart.innerHTML = '' : null; // verificar si se puede modificar para no usar esta linea
         
         rowItemsCart.forEach((rowItemCart) =>{
         
@@ -119,8 +122,8 @@ function createElementDom () {
 
     function deleteRowItem (e) { // me falta conseguir que al borrar el ultimo item del carrito me deje el total en $0
         const buttonDeleteclick = e.target;
-        buttonDeleteclick.closest('.rowProduct').remove();
-
+        const buttonDeleteSelected = buttonDeleteclick.closest('.rowProduct').remove();
+        
         totalCartUpdate();
     }
 
@@ -141,7 +144,16 @@ function createElementDom () {
         
         const totalCart = document.querySelector('.totalCart'); // tengo que agregar estas dos lineas de codigo porque si llamo a la funcion totalCartUpdate()
         totalCart.innerHTML = '';                               // no me actualiza el valor total al vaciar el  carrito
+    }
+
+    function checkOut(e) {
+        const checkoutPage = e.target;
+        const checkoutitems = checkoutPage.parentElement.parentElement.querySelectorAll('.productsSelected')
         
+
+
+        console.log(checkoutitems)
+    
     }
 }   
   
